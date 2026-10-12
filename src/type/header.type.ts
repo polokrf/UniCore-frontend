@@ -1,0 +1,1 @@
+export type INavLink = { name: string; path: string };

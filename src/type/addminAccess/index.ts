@@ -1,0 +1,5 @@
+import * as enrollments from './enrollments.type'
+import * as student from './student.approved'
+import * as teacher from './teacher.approved.type'
+import * as department from './department.type'
+import * as course from './course.type'
