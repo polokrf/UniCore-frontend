@@ -40,6 +40,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </Provider>
         <Toaster />
+        
       </body>
     </html>
   );

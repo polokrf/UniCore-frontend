@@ -1,5 +1,5 @@
 import apiFetch from '@/lib/apiFetch';
-import { IClassRoutine } from '@/type/addminAccess/get.class.routine.type';
+import { IClassRoutine, IClassRoutineUpdate } from '@/type/addminAccess/get.class.routine.type';
 import { TApiResponse, TRoutineUpdatePayload } from '@/type/api.type';
 import { TRoutine } from '@/type/domain.type';
 
@@ -9,10 +9,10 @@ export const getClassRoutines = () =>
 export const getSingleClassRoutine = (id: string) =>
   apiFetch<TApiResponse<IClassRoutine>>(`/api/class-routine/${id}`);
 
-export const updateClassRoutine = (id: string, payload: TRoutineUpdatePayload) =>
-  apiFetch<TApiResponse<TRoutine>>(`/api/class-routine/${id}`, {
+export const updateClassRoutine = ( payload:IClassRoutineUpdate) =>
+  apiFetch(`/api/class-routine/${payload.id}`, {
     method: 'PATCH',
-    body: payload,
+    body: payload.payload,
   });
 
 export const deleteClassRoutine = (id: string) =>

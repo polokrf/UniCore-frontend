@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useForm } from '@tanstack/react-form';
-import { z } from 'zod';
-import { toast } from 'sonner';
 
 import {
   Dialog,
@@ -25,40 +23,16 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { DayOfWeek, IClassRoutine, IClassRoutineUpdate } from '@/type/addminAccess/get.class.routine.type';
+import { updateClassRoutineValidation } from '@/validation/class.routine.validation';
+import { useUpdateClassRoutine } from '@/hooks/admin-hook/class.routin.hook';
+import { toast } from '@/components/ui/toast';
+import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 
 
 
-const schema = z.object({
-  day: z
-    .enum([
-      'SATURDAY',
-      'SUNDAY',
-      'MONDAY',
-      'TUESDAY',
-      'WEDNESDAY',
-      'THURSDAY',
-      'FRIDAY',
-    ])
-    .optional(),
 
-  startTime: z
-    .string()
-    .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Invalid start time')
-    .optional(),
-
-  endTime: z
-    .string()
-    .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Invalid end time')
-    .optional(),
-
-  room: z
-    .string()
-    .trim()
-    .min(1, 'Room is required')
-    .max(50, 'Room is too long')
-    .optional(),
-});
 
 const days: DayOfWeek[] = [
   'SATURDAY',
@@ -84,6 +58,10 @@ export default function UpdateRoutineDialog({
   
 }: Props) {
   const [submitting, setSubmitting] = useState(false);
+  
+  const {mutateAsync:update}=useUpdateClassRoutine()
+
+  const queryClient = useQueryClient();
 
   const form = useForm({
     defaultValues: {
@@ -92,31 +70,48 @@ export default function UpdateRoutineDialog({
       endTime: routine.endTime,
       room: routine.room,
     },
+    validators:{
+      onSubmit:updateClassRoutineValidation
+    },
 
     onSubmit: async ({ value }) => {
-      const result = schema.safeParse(value);
 
-      if (!result.success) {
-        toast.error(result.error.issues[0]?.message ?? 'Invalid form data');
-        return;
-      }
-
-      if (result.data.startTime && result.data.endTime) {
-        if (result.data.startTime >= result.data.endTime) {
-          toast.error('End time must be after start time');
-          return;
-        }
-      }
-
+      const data={
+        payload: {
+          day: value.day,
+          startTime: value.startTime,
+          endTime: value.endTime,
+          room: value.room,
+        },
+        id:routine.id
+      };
+      
       try {
         setSubmitting(true);
 
-        // await onUpdate(routine.id, result.data);
+        await update(data);
 
-        toast.success('Class routine updated successfully');
+        toast.add({
+          type: 'success',
+          title: 'Class routine updated successfully',
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: ['single-get-routine', routine.id],
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: ['class-routines'],
+        });
+         
+       
+        
         onOpenChange(false);
       } catch {
-        toast.error('Failed to update class routine');
+        toast.add({
+          type:'error',
+          title:'Failed to update class routine'
+        });
       } finally {
         setSubmitting(false);
       }

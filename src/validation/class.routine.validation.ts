@@ -35,3 +35,36 @@ export const createClassRoutineValidation = z
     message: 'End time must be after start time',
     path: ['endTime'],
   });
+
+
+
+  export const updateClassRoutineValidation = z.object({
+    day: z
+      .enum([
+        'SATURDAY',
+        'SUNDAY',
+        'MONDAY',
+        'TUESDAY',
+        'WEDNESDAY',
+        'THURSDAY',
+        'FRIDAY',
+      ])
+      ,
+  
+    startTime: z
+      .string()
+      .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Invalid start time')
+      ,
+  
+    endTime: z
+      .string()
+      .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Invalid end time')
+     ,
+  
+    room: z
+      .string()
+      .trim()
+      .min(1, 'Room is required')
+      .max(50, 'Room is too long')
+     ,
+  });

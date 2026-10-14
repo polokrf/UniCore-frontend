@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Pencil, Trash2 } from 'lucide-react';
-import { toast } from 'sonner';
+import { Loader2, Pencil, Trash2 } from 'lucide-react';
+
 
 import {
   Sheet,
@@ -31,8 +31,10 @@ import { Badge } from '@/components/ui/badge';
 
 import { IClassRoutine, IClassRoutineUpdate } from '@/type/addminAccess/get.class.routine.type';
 import UpdateRoutineDialog from './UpdateRoutineDialog';
-import { useGetSingleClassRoutine } from '@/hooks/admin-hook/class.routin.hook';
+import { useDeleteClassRoutine, useGetSingleClassRoutine } from '@/hooks/admin-hook/class.routin.hook';
 import { SkeletonText } from '@/components/layout/loading/SkeletonText';
+import { toast } from '@/components/ui/toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
  id: string | null;
@@ -53,9 +55,11 @@ export default function ClassRoutineSheet({
 
    const{ data }= useGetSingleClassRoutine(id as string) 
    const routine = data?.data as IClassRoutine || {}
+   const {mutateAsync:deleteRoutine}=useDeleteClassRoutine()
+   const queryClient = useQueryClient()
 
    if(!routine){
-    return  <SkeletonText/>
+    return <Loader2/>
    }
 
   //  console.log(routine)
@@ -65,18 +69,29 @@ export default function ClassRoutineSheet({
   const semester = offering?.semester;
   const teacher = offering?.teacher;
 
-  const handleDelete = async () => {
+  const handleDelete = async (id:string) => {
     try {
       setDeleting(true);
-
       
 
-      toast.success('Class routine deleted successfully');
+      await deleteRoutine(id)
+
+      toast.add({
+        type:'success',
+        title:"routine delete success"
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ['class-routines'],
+      });
 
       setDeleteOpen(false);
       onOpenChange(false);
     } catch {
-      toast.error('Failed to delete class routine');
+      toast.add({
+        type: 'error',
+        title: 'Failed to delete routine',
+      });
     } finally {
       setDeleting(false);
     }
@@ -194,7 +209,7 @@ export default function ClassRoutineSheet({
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               onClick={event => {
                 event.preventDefault();
-                void handleDelete();
+                void handleDelete(routine.id);
               }}
             >
               {deleting ? 'Deleting...' : 'Confirm Delete'}

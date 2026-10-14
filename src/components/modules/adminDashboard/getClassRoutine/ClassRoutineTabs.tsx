@@ -3,27 +3,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import ClassRoutineTable from './ClassRoutineTable';
-import { IClassRoutine } from '@/type/addminAccess/get.class.routine.type';
 
-interface Props {
-  routines: IClassRoutine[];
-  onUpdate: (
-    id: string,
-    data: {
-      day?: IClassRoutine['day'];
-      startTime?: string;
-      endTime?: string;
-      room?: string;
-    },
-  ) => Promise<void>;
-  onDelete: (id: string) => Promise<void>;
-}
-
-export default function ClassRoutineTabs({
- 
-  onUpdate,
-  onDelete,
-}: Props) {
+export default function ClassRoutineTabs() {
   return (
     <Tabs defaultValue="table" className="space-y-5">
       <div>

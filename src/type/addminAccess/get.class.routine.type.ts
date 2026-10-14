@@ -63,9 +63,12 @@ export interface IClassRoutine {
 }
 
 export interface IClassRoutineUpdate {
-  day?: DayOfWeek;
-  startTime?: string;
-  endTime?: string;
-  room?: string;
+  payload: {
+    day?: DayOfWeek;
+    startTime?: string;
+    endTime?: string;
+    room?: string;
+  },
+  id:string
 }
 
