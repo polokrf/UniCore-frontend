@@ -9,6 +9,9 @@ export const createCourse = (payload: ICoursePayload) => {
 export const getCourse = (params:ICourseQuery) => {
   return apiFetch<TCourseGetResponse>('/api/course',{params});
 };
+export const getSimpleCourse = () => {
+  return apiFetch<TCourseGetResponse>('/api/course');
+};
 
 export const  updateCourse=(data:ICourseUpdate)=>{
  return apiFetch<TCourseGetResponse>(`/api/course/${data.id}`, {method:'PATCH',body:data.payload});

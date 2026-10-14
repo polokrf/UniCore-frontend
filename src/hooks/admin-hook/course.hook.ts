@@ -1,6 +1,6 @@
 'use client';
 
-import { createCourse, getCourse, updateCourse } from "@/api/admin-api/course.api";
+import { createCourse, getCourse, getSimpleCourse, updateCourse } from "@/api/admin-api/course.api";
 
 import { TCourseGetResponse } from "@/type/addminAccess/course.type";
 import { ICourseQuery } from "@/type/query.types";
@@ -10,6 +10,12 @@ export const useGetCourse = (params:ICourseQuery) => {
   return useQuery<TCourseGetResponse>({
     queryKey: ['get-all-course',params],
     queryFn:()=> getCourse(params),
+  });
+};
+export const useSimpleGetCourse = () => {
+  return useQuery<TCourseGetResponse>({
+    queryKey: ['get-all-course'],
+    queryFn: getSimpleCourse,
   });
 };
 

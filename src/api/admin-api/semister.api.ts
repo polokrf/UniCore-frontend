@@ -5,6 +5,9 @@ import { IQuery } from '@/type/query.types';
 export const getSemester = (params:IQuery) => {
   return apiFetch<TSemesterResponse>('/api/semester',{params});
 };
+export const getSimpleSemester = () => {
+  return apiFetch<TSemesterResponse>('/api/semester');
+};
 
 export const createSemester = (payload: ISemesterPayload) => {
   return apiFetch('/api/semester/crate', {

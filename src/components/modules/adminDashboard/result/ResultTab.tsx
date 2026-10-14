@@ -1,28 +1,40 @@
 'use client';
-import { useUrlEnumState, useUrlPageState, useUrlSearchState } from '@/hooks/use-url-list-state';
+import {
+  useUrlEnumState,
+  useUrlPageState,
+  useUrlSearchState,
+} from '@/hooks/use-url-list-state';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import React, { ChangeEvent, Suspense, useState } from 'react';
+import React, { ChangeEvent, Suspense } from 'react';
 import { SkeletonText } from '@/components/layout/loading/SkeletonText';
-import { TApprovedStatus } from '@/type/addminAccess/teacher.approved.type';
-import { IEnrollmentQuery, IResultQuery, ITeacherQuery } from '@/type/query.types';
+import { IResultQuery } from '@/type/query.types';
 import { Input } from '@/components/ui/input';
 import useDebounced from '@/hooks/debounced';
 import { ResultTable } from './ResultTable';
-import { IResult } from '@/type/addminAccess/result.type';
-
+import { Search } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from '@/components/ui/card';
 
 const ResultTab = () => {
   type TStatus = 'ALL' | 'Active' | 'InActive';
   const [search, setSearch] = useUrlSearchState();
   const [page, setPage] = useUrlPageState();
 
-  const [tab, setTab] = useUrlEnumState<'ALL' | 'Active' | 'InActive'>('published', 'ALL', ['ALL', 'Active', 'InActive'] as const);
+  const [tab, setTab] = useUrlEnumState<'ALL' | 'Active' | 'InActive'>(
+    'published',
+    'ALL',
+    ['ALL', 'Active', 'InActive'] as const,
+  );
 
   const approvedStatus: [TStatus, string][] = [
     ['ALL', 'All'],
     ['Active', 'Published'],
     ['InActive', 'UnPublished'],
-   
   ];
 
   const searchDebouncing = useDebounced(search);
@@ -41,40 +53,61 @@ const ResultTab = () => {
   };
 
   return (
-    <div className=" space-y-4">
-      <div className="flex md:flex-row flex-col justify-between items-center gap-3">
+    <Card className="w-full shadow-sm border border-slate-200/80 dark:border-slate-800 bg-card rounded-xl overflow-hidden">
+      {/* Header with Title and Subtitle */}
+      <CardHeader className="pb-4">
         <div>
-          <Input
-            value={search}
-            onChange={e => handleSearch(e)}
-            type="search"
-            placeholder="search with email Name course title etc.."
-          />
+          <CardTitle className="text-2xl font-bold tracking-tight text-foreground">
+            Result Management
+          </CardTitle>
+          <CardDescription className="text-sm text-muted-foreground mt-1">
+            Review, filter, and monitor student academic results and publication
+            statuses.
+          </CardDescription>
         </div>
-        {/* tabs */}
-        <div>
-          <Tabs value={tab}>
-            <TabsList>
-              {approvedStatus.map(([status, lable]) => (
-                <TabsTrigger
-                  key={status}
-                  onClick={() => setTab(status)}
-                  value={status}
-                >
-                  {lable}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-        </div>
-      </div>
+      </CardHeader>
 
-      <div>
-        <Suspense fallback={<SkeletonText />}>
-          <ResultTable handleChangPage={setPage} {...queryParams} />
-        </Suspense>
-      </div>
-    </div>
+      <CardContent className="space-y-6">
+        {/* Search & Tabs Controls */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 bg-muted/40 p-3 rounded-lg border border-border/50">
+          <div className="relative w-full sm:w-80">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              value={search}
+              onChange={e => handleSearch(e)}
+              type="search"
+              placeholder="Search by email, name, course..."
+              className="pl-9 bg-background focus-visible:ring-1 transition-all"
+            />
+          </div>
+
+          {/* Tabs */}
+          <div className="w-full sm:w-auto overflow-x-auto">
+            <Tabs value={tab} className="w-full">
+              <TabsList className="grid grid-cols-3 w-full sm:w-auto bg-background/80 border p-1 rounded-lg">
+                {approvedStatus.map(([status, lable]) => (
+                  <TabsTrigger
+                    key={status}
+                    onClick={() => setTab(status)}
+                    value={status}
+                    className="text-xs sm:text-sm font-medium transition-all"
+                  >
+                    {lable}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+          </div>
+        </div>
+
+        {/* Result Table Section */}
+        <div className="rounded-md border border-border/60 overflow-hidden bg-background">
+          <Suspense fallback={<SkeletonText />}>
+            <ResultTable handleChangPage={setPage} {...queryParams} />
+          </Suspense>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
