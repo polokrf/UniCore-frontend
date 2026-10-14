@@ -7,3 +7,11 @@ export const crateCourseValidation = z.object({
   description: z.string('give string value'),
   credit: z.number('give  a number value'),
 });
+
+
+export const updateCourse = z.object({
+  code: z.string('give string value'),
+  title: z.string('give string value'),
+  description: z.string('give string value'),
+  credit: z.int('give  a number value'),
+});

@@ -46,3 +46,16 @@ export interface IDepartmentQuery {
   page?: number;
   limit?: number;
 }
+export interface ICourseQuery {
+  search?: string | undefined;
+  isActive?: string | undefined;
+  page?: number;
+  limit?: number;
+}
+
+export interface IQuery {
+  search?: string | undefined;
+  isActive?: string | undefined;
+  page?: number;
+  limit?: number;
+}

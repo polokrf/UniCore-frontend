@@ -12,7 +12,10 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { toast } from '@/components/ui/toast';
-import { useApprovedRejectedTeacher, useGetSingleTeacher } from '@/hooks/admin-hook/approved.teacher.student.hook';
+import {
+  useApprovedRejectedTeacher,
+  useGetSingleTeacher,
+} from '@/hooks/admin-hook/approved.teacher.student.hook';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   BadgeCheck,
@@ -30,37 +33,32 @@ export function TeacherApprovedSheet({ approvedId }: { approvedId: string }) {
 
   const teacher = data?.data;
 
-  // console.log(teacher,'teacher')
+  const { mutate, isPending } = useApprovedRejectedTeacher();
+  const queryClient = useQueryClient();
 
-
-  const {mutate,isPending}=useApprovedRejectedTeacher()
-  const queryClient=useQueryClient()
-
-
-  const handleUpadeStatus =(id:string,status:string)=>{
-      const payload = {
-        status,
-        id,
-      };
-      mutate(payload, {
-        onSuccess: res => {
-          toast.add({
-            type: 'success',
-            title: `${res.message}`,
-          });
-          queryClient.invalidateQueries({
-            queryKey: ['get-single-teacher', 'getTeacher'],
-          });
-        },
-        onError: err => {
-          toast.add({
-            type: 'error',
-            title: `${err.message}`,
-          });
-        },
-      });
-  }
-  
+  const handleUpadeStatus = (id: string, status: string) => {
+    const payload = {
+      status,
+      id,
+    };
+    mutate(payload, {
+      onSuccess: res => {
+        toast.add({
+          type: 'success',
+          title: `${res.message}`,
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['get-single-teacher', 'getTeacher'],
+        });
+      },
+      onError: err => {
+        toast.add({
+          type: 'error',
+          title: `${err.message}`,
+        });
+      },
+    });
+  };
 
   return (
     <Sheet>
@@ -68,18 +66,19 @@ export function TeacherApprovedSheet({ approvedId }: { approvedId: string }) {
         render={
           <Button
             variant="outline"
-            className="gap-2 shadow-xs transition-all hover:bg-primary/5"
+            size="sm"
+            className="gap-1.5 shadow-xs transition-all hover:bg-primary/5"
           >
-            <Sparkles className="w-4 h-4 text-primary" />
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
             Review
           </Button>
         }
       />
 
-      <SheetContent className="flex flex-col justify-between w-screen h-screen sm:w-full sm:max-w-md sm:h-full p-2 sm:p-6 overflow-y-auto border-none sm:border-solid">
+      <SheetContent className="flex flex-col justify-between w-screen h-screen sm:w-full sm:max-w-md sm:h-full p-4 sm:p-6 overflow-y-auto border-none sm:border-solid">
         <div className="space-y-6">
           {/* Header Section */}
-          <SheetHeader className="space-y-3 pb-4 border-b border-border text-left">
+          <SheetHeader className="space-y-3 pb-4 border-b border-border/60 text-left">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary uppercase tracking-wider">
                 {teacher?.status || 'Invalid'}
@@ -116,7 +115,7 @@ export function TeacherApprovedSheet({ approvedId }: { approvedId: string }) {
           <div className="space-y-3">
             <div className="grid grid-cols-1 gap-3">
               {/* Designation */}
-              <div className="flex items-start gap-3 p-3 sm:p-3.5 rounded-xl bg-muted/50 border border-border/60">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-muted/40 border border-border/60 shadow-2xs">
                 <div className="p-2 rounded-lg bg-background shadow-xs text-primary shrink-0">
                   <Briefcase className="w-4 h-4" />
                 </div>
@@ -131,7 +130,7 @@ export function TeacherApprovedSheet({ approvedId }: { approvedId: string }) {
               </div>
 
               {/* Qualification */}
-              <div className="flex items-start gap-3 p-3 sm:p-3.5 rounded-xl bg-muted/50 border border-border/60">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-muted/40 border border-border/60 shadow-2xs">
                 <div className="p-2 rounded-lg bg-background shadow-xs text-primary shrink-0">
                   <GraduationCap className="w-4 h-4" />
                 </div>
@@ -146,7 +145,7 @@ export function TeacherApprovedSheet({ approvedId }: { approvedId: string }) {
               </div>
 
               {/* Specialization */}
-              <div className="flex items-start gap-3 p-3 sm:p-3.5 rounded-xl bg-muted/50 border border-border/60">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-muted/40 border border-border/60 shadow-2xs">
                 <div className="p-2 rounded-lg bg-background shadow-xs text-primary shrink-0">
                   <BadgeCheck className="w-4 h-4" />
                 </div>
@@ -161,7 +160,7 @@ export function TeacherApprovedSheet({ approvedId }: { approvedId: string }) {
               </div>
 
               {/* Phone */}
-              <div className="flex items-start gap-3 p-3 sm:p-3.5 rounded-xl bg-muted/50 border border-border/60">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-muted/40 border border-border/60 shadow-2xs">
                 <div className="p-2 rounded-lg bg-background shadow-xs text-primary shrink-0">
                   <PhoneCall className="w-4 h-4" />
                 </div>
@@ -179,7 +178,7 @@ export function TeacherApprovedSheet({ approvedId }: { approvedId: string }) {
         </div>
 
         {/* Footer Actions */}
-        <SheetFooter className="pt-4 mt-6 border-t border-border flex flex-col-reverse sm:flex-row gap-2.5 sm:justify-between">
+        <SheetFooter className="pt-4 mt-6 border-t border-border/60 flex flex-col-reverse sm:flex-row gap-2.5 sm:justify-between">
           <SheetClose
             render={
               <Button

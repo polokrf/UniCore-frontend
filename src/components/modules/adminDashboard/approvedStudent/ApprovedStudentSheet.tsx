@@ -14,21 +14,13 @@ import {
 import { toast } from '@/components/ui/toast';
 import {
   useApprovedRejectedStudent,
-  useApprovedRejectedTeacher,
   useGetSingleStudent,
 } from '@/hooks/admin-hook/approved.teacher.student.hook';
 import { useQueryClient } from '@tanstack/react-query';
-import {
-  BookOpen,
-  Mail,
-  MapPin,
-  PhoneCall,
-  Sparkles,
-  User,
-} from 'lucide-react';
+import { BookOpen, MapPin, PhoneCall, Sparkles, User } from 'lucide-react';
 
 export function StudentApprovedSheet({ approvedId }: { approvedId: string }) {
-const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
   const payload = {
     id: approvedId as string,
   };
@@ -37,7 +29,6 @@ const queryClient = useQueryClient();
   const student = data?.data;
 
   const { mutate, isPending } = useApprovedRejectedStudent();
- 
 
   const handleUpadeStatus = (id: string, status: string) => {
     const payload = {
@@ -50,13 +41,13 @@ const queryClient = useQueryClient();
           type: 'success',
           title: `${res.message}`,
         });
-         queryClient.invalidateQueries({
-           queryKey: ['get-single-student'],
-         });
+        queryClient.invalidateQueries({
+          queryKey: ['get-single-student'],
+        });
 
-         queryClient.invalidateQueries({
-           queryKey: ['getStudent'],
-         });
+        queryClient.invalidateQueries({
+          queryKey: ['getStudent'],
+        });
       },
       onError: err => {
         toast.add({
@@ -73,9 +64,10 @@ const queryClient = useQueryClient();
         render={
           <Button
             variant="outline"
-            className="gap-2 shadow-xs transition-all hover:bg-primary/5"
+            size="sm"
+            className="gap-1.5 shadow-xs transition-all hover:bg-primary/5"
           >
-            <Sparkles className="w-4 h-4 text-primary" />
+            <Sparkles className="w-3.5 h-3.5 text-primary" />
             Review
           </Button>
         }
@@ -84,7 +76,7 @@ const queryClient = useQueryClient();
       <SheetContent className="flex flex-col justify-between w-screen h-screen sm:w-full sm:max-w-md sm:h-full p-4 sm:p-6 overflow-y-auto border-none sm:border-solid">
         <div className="space-y-6">
           {/* Header Section */}
-          <SheetHeader className="space-y-3 pb-4 border-b border-border text-left">
+          <SheetHeader className="space-y-3 pb-4 border-b border-border/60 text-left">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary uppercase tracking-wider">
                 {student?.status || 'Invalid'}
@@ -107,7 +99,9 @@ const queryClient = useQueryClient();
               </div>
             </div>
 
-           
+            <SheetTitle className="text-xl sm:text-2xl font-bold tracking-tight text-foreground break-words">
+              Student Profile Details
+            </SheetTitle>
 
             <SheetDescription className="text-muted-foreground text-xs sm:text-sm leading-relaxed">
               Review student profile details, academic information, and update
@@ -119,7 +113,7 @@ const queryClient = useQueryClient();
           <div className="space-y-3">
             <div className="grid grid-cols-1 gap-3">
               {/* Gender */}
-              <div className="flex items-start gap-3 p-3 sm:p-3.5 rounded-xl bg-muted/50 border border-border/60">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-muted/40 border border-border/60 shadow-2xs">
                 <div className="p-2 rounded-lg bg-background shadow-xs text-primary shrink-0">
                   <User className="w-4 h-4" />
                 </div>
@@ -133,9 +127,8 @@ const queryClient = useQueryClient();
                 </div>
               </div>
 
-              
               {/* Semester */}
-              <div className="flex items-start gap-3 p-3 sm:p-3.5 rounded-xl bg-muted/50 border border-border/60">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-muted/40 border border-border/60 shadow-2xs">
                 <div className="p-2 rounded-lg bg-background shadow-xs text-primary shrink-0">
                   <BookOpen className="w-4 h-4" />
                 </div>
@@ -150,7 +143,7 @@ const queryClient = useQueryClient();
               </div>
 
               {/* Address */}
-              <div className="flex items-start gap-3 p-3 sm:p-3.5 rounded-xl bg-muted/50 border border-border/60">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-muted/40 border border-border/60 shadow-2xs">
                 <div className="p-2 rounded-lg bg-background shadow-xs text-primary shrink-0">
                   <MapPin className="w-4 h-4" />
                 </div>
@@ -165,7 +158,7 @@ const queryClient = useQueryClient();
               </div>
 
               {/* Phone */}
-              <div className="flex items-start gap-3 p-3 sm:p-3.5 rounded-xl bg-muted/50 border border-border/60">
+              <div className="flex items-start gap-3 p-3.5 rounded-xl bg-muted/40 border border-border/60 shadow-2xs">
                 <div className="p-2 rounded-lg bg-background shadow-xs text-primary shrink-0">
                   <PhoneCall className="w-4 h-4" />
                 </div>
@@ -183,7 +176,7 @@ const queryClient = useQueryClient();
         </div>
 
         {/* Footer Actions */}
-        <SheetFooter className="pt-4 mt-6 border-t border-border flex flex-col-reverse sm:flex-row gap-2.5 sm:justify-between">
+        <SheetFooter className="pt-4 mt-6 border-t border-border/60 flex flex-col-reverse sm:flex-row gap-2.5 sm:justify-between">
           <SheetClose
             render={
               <Button

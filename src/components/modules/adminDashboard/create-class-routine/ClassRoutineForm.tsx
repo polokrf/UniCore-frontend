@@ -75,6 +75,7 @@ const ClassRoutineForm = () => {
             type: 'success',
             title: 'Create Class Routine Successful',
           });
+          
         },
         onError: err => {
           toast.add({
