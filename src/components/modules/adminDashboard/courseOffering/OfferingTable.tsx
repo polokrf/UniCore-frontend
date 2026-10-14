@@ -14,7 +14,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useAllTeachers, useGetCourseOffering } from '@/hooks/admin-hook/courseOffering.hook';
-import { useGetSemester } from '@/hooks/admin-hook/semester.hook';
+import { useGetSemester, useSimpleGetSemester } from '@/hooks/admin-hook/semester.hook';
 import { useUrlParams } from '@/hooks/use-url-params';
 import { errorMessage, formatBdt } from '@/lib/format';
 import Link from 'next/link';
@@ -38,7 +38,9 @@ export default function OfferingTable() {
   const page = getNumber('page', 1);
 
   const offeringsQuery = useGetCourseOffering();
-  const semestersQuery = useGetSemester();
+  const {data :semestersQuery } = useSimpleGetSemester();
+
+   
   const teachersQuery = useAllTeachers();
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -51,7 +53,7 @@ export default function OfferingTable() {
       a.semesterId.localeCompare(b.semesterId),
   );
   const semesterLabel = (id: string) => {
-    const s = semestersQuery.data?.data.find(x => x.id === id);
+    const s = semestersQuery?.data?.data.find(x => x.id === id);
     return s ? `${s.name} ${s.year}` : '—';
   };
   const teacherOf = (id: string | null) =>
