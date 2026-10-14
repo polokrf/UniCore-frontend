@@ -29,7 +29,8 @@
       "correctness":{
         "noUnusedImports":"off",
         "noChildrenProp":"off",
-        "noUnusedFunctionParameters":"off"
+        "noUnusedFunctionParameters":"off",
+        "useExhaustiveDependencies":"off"
       },
       "complexity":{
        "noUselessUndefinedInitialization":"off",

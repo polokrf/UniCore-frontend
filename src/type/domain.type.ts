@@ -52,10 +52,15 @@ export type TOffering = {
 };
 
 // Offering as embedded in /enrolment and /class-routine responses.
-export type TOfferingFull = Omit<TOffering, 'course' | 'semester' | 'teacher'> & {
+export type TOfferingFull = Omit<
+  TOffering,
+  'course' | 'semester' | 'teacher'
+> & {
   course: TCourse;
   semester: TSemester;
-  teacher: (TTeacherProfile & { user: { firstName: string; email: string } }) | null;
+  teacher:
+    | (TTeacherProfile & { user: { firstName: string; email: string } })
+    | null;
 };
 
 export type TMyEnrollment = {
@@ -103,3 +108,5 @@ export type TStudentProfile = {
   address: string | null;
   status: TProfileStatus;
 };
+
+
