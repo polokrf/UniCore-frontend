@@ -10,7 +10,10 @@ import { Field, FieldError, FieldGroup } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { useMyTeacherProfile, useUpdateTeacherProfile } from '@/hooks/faculty.hook';
+import {
+  useMyTeacherProfile,
+  useUpdateTeacherProfile,
+} from '@/hooks/teacher.hook';
 import { formatDate } from '@/lib/format';
 import { TTeacherProfile } from '@/type/domain.type';
 import { useForm } from '@tanstack/react-form';
@@ -54,7 +57,8 @@ function EditForm({ profile }: { profile: TTeacherProfile }) {
         {FIELDS.map(([name, label]) => (
           <form.Field key={name} name={name}>
             {field => {
-              const invalid = field.state.meta.isTouched && !field.state.meta.isValid;
+              const invalid =
+                field.state.meta.isTouched && !field.state.meta.isValid;
               return (
                 <Field data-invalid={invalid}>
                   <Label htmlFor={name}>{label}</Label>
@@ -73,7 +77,8 @@ function EditForm({ profile }: { profile: TTeacherProfile }) {
         ))}
         <form.Field name="bio">
           {field => {
-            const invalid = field.state.meta.isTouched && !field.state.meta.isValid;
+            const invalid =
+              field.state.meta.isTouched && !field.state.meta.isValid;
             return (
               <Field data-invalid={invalid}>
                 <Label htmlFor="bio">Bio</Label>

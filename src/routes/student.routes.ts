@@ -8,10 +8,11 @@ export const studentRoutes: IRoutes = {
       title: 'Over-View',
       url: path,
       items: [
-        { title: 'My-Profile', url: `${path}/profile` },
         { title: 'My-Payments', url: `${path}/payments` },
+        { title: 'My-Course', url: `${path}/my-course` },
         { title: 'My-Class-Routine', url: `${path}/my-class-routine` },
         { title: 'My-Result', url: `${path}/my-result` },
+        { title: 'My-Profile', url: `${path}/profile` },
       ],
     },
   ],

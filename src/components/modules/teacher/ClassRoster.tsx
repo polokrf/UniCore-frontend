@@ -14,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useMyOfferings, useRoster } from '@/hooks/faculty.hook';
+import { useMyOfferings, useRoster } from '@/hooks/teacher.hook';
 import { useUrlParams } from '@/hooks/use-url-params';
 import { errorMessage, formatDate } from '@/lib/format';
 
@@ -32,17 +32,24 @@ export default function ClassRoster() {
   const { get, getNumber, set } = useUrlParams();
 
   const requested = get('course');
-  const offeringId = mine.some(o => o.id === requested) ? requested : mine[0]?.id;
-  const status = ['CONFIRMED', 'PENDING'].includes(get('status')) ? get('status') : '';
+  const offeringId = mine.some(o => o.id === requested)
+    ? requested
+    : mine[0]?.id;
+  const status = ['CONFIRMED', 'PENDING'].includes(get('status'))
+    ? get('status')
+    : '';
   const search = get('search');
   const page = getNumber('page', 1);
 
-  const { data, isPending, isError, error, isPlaceholderData } = useRoster(offeringId, {
-    page,
-    limit: LIMIT,
-    search,
-    status,
-  });
+  const { data, isPending, isError, error, isPlaceholderData } = useRoster(
+    offeringId,
+    {
+      page,
+      limit: LIMIT,
+      search,
+      status,
+    },
+  );
 
   if (mine.length === 0) {
     return (
@@ -85,7 +92,10 @@ export default function ClassRoster() {
             ))}
           </div>
         </div>
-        <UrlSearch placeholder="Search name, email or student ID" className="w-64" />
+        <UrlSearch
+          placeholder="Search name, email or student ID"
+          className="w-64"
+        />
       </div>
 
       {data ? (
@@ -93,7 +103,8 @@ export default function ClassRoster() {
           {data.summary.capacity !== null
             ? `${data.summary.total} of ${data.summary.capacity} seats taken`
             : `${data.summary.total} students`}{' '}
-          · {data.summary.confirmed} confirmed · {data.summary.pending} pending payment
+          · {data.summary.confirmed} confirmed · {data.summary.pending} pending
+          payment
         </p>
       ) : null}
 
@@ -110,7 +121,9 @@ export default function ClassRoster() {
         </div>
       ) : data.data.length === 0 ? (
         <EmptyState
-          title={search || status ? 'No students match' : 'No students enrolled yet'}
+          title={
+            search || status ? 'No students match' : 'No students enrolled yet'
+          }
           description={
             search || status
               ? 'Try a different search or status.'
@@ -143,7 +156,9 @@ export default function ClassRoster() {
                       {(data.meta.page - 1) * data.meta.limit + i + 1}
                     </TableCell>
                     <TableCell>
-                      <div className="font-medium">{row.student.user.firstName}</div>
+                      <div className="font-medium">
+                        {row.student.user.firstName}
+                      </div>
                       <div className="text-muted-foreground text-xs">
                         {row.student.user.email}
                       </div>
@@ -160,7 +175,10 @@ export default function ClassRoster() {
               </TableBody>
             </Table>
           </div>
-          <UrlPagination page={data.meta.page} totalPage={data.meta.totalPage} />
+          <UrlPagination
+            page={data.meta.page}
+            totalPage={data.meta.totalPage}
+          />
         </>
       )}
     </div>

@@ -1,4 +1,4 @@
-import FacultyLoad from '@/components/modules/faculty/FacultyLoad';
+import FacultyLoad from '@/components/modules/teacher/FacultyLoad';
 import PageHeader from '@/components/shared/PageHeader';
 
 export const metadata = { title: 'Course load | UniCore' };

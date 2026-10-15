@@ -5,7 +5,7 @@ import EmptyState from '@/components/shared/EmptyState';
 import StatCard from '@/components/shared/StatCard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useClassRoutines } from '@/hooks/catalog.hook';
-import { useMyOfferings } from '@/hooks/faculty.hook';
+import { useMyOfferings } from '@/hooks/teacher.hook';
 import { toMinutes } from '@/lib/format';
 import {
   Bar,
@@ -26,7 +26,12 @@ export default function FacultyLoad() {
 
   if (isPending) return <SkeletonText />;
   if (isError) {
-    return <EmptyState title="Could not load your course load" description="Please refresh the page." />;
+    return (
+      <EmptyState
+        title="Could not load your course load"
+        description="Please refresh the page."
+      />
+    );
   }
   if (mine.length === 0) {
     return (
@@ -40,7 +45,10 @@ export default function FacultyLoad() {
   const hoursOf = (offeringId: string) =>
     (routines ?? [])
       .filter(r => r.courseOfferingId === offeringId)
-      .reduce((sum, r) => sum + (toMinutes(r.endTime) - toMinutes(r.startTime)), 0) / 60;
+      .reduce(
+        (sum, r) => sum + (toMinutes(r.endTime) - toMinutes(r.startTime)),
+        0,
+      ) / 60;
 
   const rows = mine.map(o => ({
     course: o.course?.code ?? 'N/A',
@@ -66,14 +74,31 @@ export default function FacultyLoad() {
         <CardContent>
           <div className="h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={rows} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+              <BarChart
+                data={rows}
+                margin={{ top: 8, right: 8, left: -16, bottom: 0 }}
+              >
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="course" tickLine={false} axisLine={false} />
-                <YAxis allowDecimals={false} tickLine={false} axisLine={false} />
+                <YAxis
+                  allowDecimals={false}
+                  tickLine={false}
+                  axisLine={false}
+                />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="credits" name="Credits" fill="#6366f1" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="hours" name="Hours / week" fill="#10b981" radius={[4, 4, 0, 0]} />
+                <Bar
+                  dataKey="credits"
+                  name="Credits"
+                  fill="#6366f1"
+                  radius={[4, 4, 0, 0]}
+                />
+                <Bar
+                  dataKey="hours"
+                  name="Hours / week"
+                  fill="#10b981"
+                  radius={[4, 4, 0, 0]}
+                />
               </BarChart>
             </ResponsiveContainer>
           </div>

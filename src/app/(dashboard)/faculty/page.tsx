@@ -1,4 +1,4 @@
-import FacultyOverview from '@/components/modules/faculty/FacultyOverview';
+import FacultyOverview from '@/components/modules/teacher/FacultyOverview';
 import { Suspense } from 'react';
 
 export const metadata = { title: 'Faculty dashboard | UniCore' };

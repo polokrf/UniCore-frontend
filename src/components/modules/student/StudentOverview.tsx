@@ -11,8 +11,8 @@ import { useMyEnrollments, useMyResults } from '@/hooks/student.hook';
 import { useGetMe } from '@/hooks/auth.hook';
 import { useUrlParams } from '@/hooks/use-url-params';
 import AvailableCourses from './AvailableCourses';
-import MyCourses from './MyCourses';
-import ResultsTable from './ResultsTable';
+import MyCourses from './student.course/MyCoursesTable';
+import ResultsTable from './student.result/ResultsTable';
 
 const TABS = ['courses', 'available', 'schedule', 'results'] as const;
 
@@ -24,7 +24,9 @@ export default function StudentOverview() {
   const { get, set } = useUrlParams();
 
   const requested = get('tab', 'courses');
-  const tab = (TABS as readonly string[]).includes(requested) ? requested : 'courses';
+  const tab = (TABS as readonly string[]).includes(requested)
+    ? requested
+    : 'courses';
 
   if (isPending) return <SkeletonText />;
   if (isError || !enrollments) {
@@ -38,13 +40,20 @@ export default function StudentOverview() {
 
   const confirmed = enrollments.filter(e => e.status === 'CONFIRMED');
   const unpaid = enrollments.filter(e => e.status === 'PENDING');
-  const credits = confirmed.reduce((sum, e) => sum + e.courseOffering.course.credit, 0);
+  const credits = confirmed.reduce(
+    (sum, e) => sum + e.courseOffering.course.credit,
+    0,
+  );
   // my schedule = routines of the courses I am confirmed in (the API returns every routine)
   const confirmedOfferingIds = new Set(confirmed.map(e => e.courseOfferingId));
-  const myRoutines = (routines ?? []).filter(r => confirmedOfferingIds.has(r.courseOfferingId));
+  const myRoutines = (routines ?? []).filter(r =>
+    confirmedOfferingIds.has(r.courseOfferingId),
+  );
 
   // credit-weighted GPA over published results
-  const creditOf = new Map(enrollments.map(e => [e.id, e.courseOffering.course.credit]));
+  const creditOf = new Map(
+    enrollments.map(e => [e.id, e.courseOffering.course.credit]),
+  );
   let weighted = 0;
   let creditSum = 0;
   (results ?? []).forEach(r => {
@@ -62,13 +71,28 @@ export default function StudentOverview() {
       />
 
       <div className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Confirmed courses" value={confirmed.length} hint={`${credits} credits`} />
-        <StatCard label="Awaiting payment" value={unpaid.length} hint="Pay to confirm your seat" />
-        <StatCard label="CGPA" value={gpa} hint={`${results?.length ?? 0} published results`} />
+        <StatCard
+          label="Confirmed courses"
+          value={confirmed.length}
+          hint={`${credits} credits`}
+        />
+        <StatCard
+          label="Awaiting payment"
+          value={unpaid.length}
+          hint="Pay to confirm your seat"
+        />
+        <StatCard
+          label="CGPA"
+          value={gpa}
+          hint={`${results?.length ?? 0} published results`}
+        />
         <StatCard label="Classes per week" value={myRoutines.length} />
       </div>
 
-      <Tabs value={tab} onValueChange={v => set({ tab: v === 'courses' ? '' : String(v) })}>
+      <Tabs
+        value={tab}
+        onValueChange={v => set({ tab: v === 'courses' ? '' : String(v) })}
+      >
         <TabsList>
           <TabsTrigger value="courses">My courses</TabsTrigger>
           <TabsTrigger value="available">Available courses</TabsTrigger>

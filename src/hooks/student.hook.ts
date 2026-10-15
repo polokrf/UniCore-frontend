@@ -95,8 +95,14 @@ export const useCheckout = () =>
         description: res.data?.statusMessage || 'bKash did not return a payment link',
       });
     },
-    onError: err =>
-      toast.add({ type: 'error', description: errorMessage(err, 'Could not start payment') }),
+    onError: err =>{
+      toast.add({
+        type: 'error',
+        description: errorMessage(err, 'Could not start payment'),
+      })
+    window.location.href = '/student/failures?status=failure';
+    }
+      
   });
 
 export const useUpdateStudentProfile = () => {

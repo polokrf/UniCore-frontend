@@ -16,10 +16,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useGetMe } from '@/hooks/auth.hook';
 import { useClassRoutines } from '@/hooks/catalog.hook';
-import { useMyOfferings } from '@/hooks/faculty.hook';
+import { useMyOfferings } from '@/hooks/teacher.hook';
 import { useUrlParams } from '@/hooks/use-url-params';
 import { formatBdt } from '@/lib/format';
-import ClassRoster from '@/components/modules/faculty/ClassRoster';
+import ClassRoster from '@/components/modules/teacher/ClassRoster';
 import { Button } from '@/components/ui/button';
 
 const TABS = ['courses', 'roster', 'schedule'] as const;
@@ -31,7 +31,9 @@ export default function FacultyOverview() {
   const { get, set } = useUrlParams();
 
   const requested = get('tab', 'courses');
-  const tab = (TABS as readonly string[]).includes(requested) ? requested : 'courses';
+  const tab = (TABS as readonly string[]).includes(requested)
+    ? requested
+    : 'courses';
 
   if (isPending) return <SkeletonText />;
   if (isError || !profile) {
@@ -47,7 +49,9 @@ export default function FacultyOverview() {
   const seats = mine.reduce((sum, o) => sum + (o.capacity ?? 0), 0);
   // my schedule = routines of the offerings assigned to me (the API returns every routine)
   const myOfferingIds = new Set(mine.map(o => o.id));
-  const myRoutines = (routines ?? []).filter(r => myOfferingIds.has(r.courseOfferingId));
+  const myRoutines = (routines ?? []).filter(r =>
+    myOfferingIds.has(r.courseOfferingId),
+  );
   const classesOf = (offeringId: string) =>
     (routines ?? []).filter(r => r.courseOfferingId === offeringId).length;
 
@@ -62,13 +66,25 @@ export default function FacultyOverview() {
         <StatCard label="Assigned courses" value={mine.length} />
         <StatCard label="Total credits" value={credits} />
         <StatCard label="Classes per week" value={myRoutines.length} />
-        <StatCard label="Seat capacity" value={seats} hint="Across your sections" />
+        <StatCard
+          label="Seat capacity"
+          value={seats}
+          hint="Across your sections"
+        />
       </div>
 
-      <Tabs value={tab} onValueChange={v =>
+      <Tabs
+        value={tab}
+        onValueChange={v =>
           // roster-only params are dropped when leaving the roster tab
-          set({ tab: v === 'courses' ? '' : String(v), course: '', search: '', status: '' })
-        }>
+          set({
+            tab: v === 'courses' ? '' : String(v),
+            course: '',
+            search: '',
+            status: '',
+          })
+        }
+      >
         <TabsList>
           <TabsTrigger value="courses">My courses</TabsTrigger>
           <TabsTrigger value="roster">Class roster</TabsTrigger>
@@ -110,7 +126,14 @@ export default function FacultyOverview() {
                         <Button
                           size="sm"
                           variant="outline"
-                          onClick={() => set({ tab: 'roster', course: o.id, search: '', status: '' })}
+                          onClick={() =>
+                            set({
+                              tab: 'roster',
+                              course: o.id,
+                              search: '',
+                              status: '',
+                            })
+                          }
                         >
                           View roster
                         </Button>
