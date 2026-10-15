@@ -43,7 +43,8 @@
         "noLabelWithoutControl":"off",
         "useSemanticElements":"off",
         "noRedundantRoles":"off",
-        "noStaticElementInteractions":"off"
+        "noStaticElementInteractions":"off",
+        "useButtonType":"off"
       }
     },
     "domains": {

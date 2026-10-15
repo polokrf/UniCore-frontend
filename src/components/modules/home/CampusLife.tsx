@@ -36,7 +36,7 @@ const facilities = [
 export default function CampusLife() {
   return (
     <section className="bg-slate-50 py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-5">
+      <div className="mx-auto max-w-7xl px-2 md:px-5">
         <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
             <span className="text-sm font-bold uppercase tracking-[0.2em] text-blue-600">
