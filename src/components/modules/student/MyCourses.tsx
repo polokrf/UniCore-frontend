@@ -65,7 +65,7 @@ export default function MyCourses({ enrollments }: { enrollments: TMyEnrollment[
                 <TableCell className="text-right">
                   {e.status === 'PENDING' ? (
                     <div className="flex justify-end gap-2">
-                      <Button size="sm" render={<Link href="/student/payments" />}>
+                      <Button nativeButton={false} size="sm" render={<Link href="/student/payments" />}>
                         Pay
                       </Button>
                       <Button

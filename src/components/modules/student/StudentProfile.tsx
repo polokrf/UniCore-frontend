@@ -58,7 +58,7 @@ function EditForm({ profile }: { profile: TStudentProfile }) {
           </form.Field>
         ))}
       </FieldGroup>
-      <Button type="submit" disabled={isPending}>
+      <Button  type="submit" disabled={isPending}>
         {isPending ? 'Saving…' : 'Save changes'}
       </Button>
     </form>

@@ -44,6 +44,7 @@ export default function ProfilePhoto() {
         <Button
           size="sm"
           variant="outline"
+          
           disabled={isPending}
           onClick={() => input.current?.click()}
         >

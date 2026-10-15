@@ -75,10 +75,12 @@ export default function StudentPayments() {
                   <TableRow key={e.id}>
                     <TableCell>
                       <p className="font-medium">
-                        {e.courseOffering.course.code} · {e.courseOffering.course.title}
+                        {e.courseOffering.course.code} ·{' '}
+                        {e.courseOffering.course.title}
                       </p>
                       <p className="text-muted-foreground text-xs">
-                        {e.courseOffering.semester.name} {e.courseOffering.semester.year}
+                        {e.courseOffering.semester.name}{' '}
+                        {e.courseOffering.semester.year}
                       </p>
                     </TableCell>
                     <TableCell>{formatBdt(e.courseOffering.fee)}</TableCell>
@@ -92,13 +94,17 @@ export default function StudentPayments() {
                       {e.status === 'PENDING' ? (
                         <div className="flex justify-end gap-2">
                           <Button
+                           
                             size="sm"
                             disabled={paying && payingId === e.id}
                             onClick={() => pay(e.id)}
                           >
-                            {paying && payingId === e.id ? 'Redirecting…' : 'Pay with bKash'}
+                            {paying && payingId === e.id
+                              ? 'Redirecting…'
+                              : 'Pay with bKash'}
                           </Button>
                           <Button
+                         
                             size="sm"
                             variant="outline"
                             disabled={cancelling && cancellingId === e.id}
