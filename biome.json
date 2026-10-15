@@ -44,7 +44,8 @@
         "useSemanticElements":"off",
         "noRedundantRoles":"off",
         "noStaticElementInteractions":"off",
-        "useButtonType":"off"
+        "useButtonType":"off",
+        "useKeyWithClickEvents":"off"
       }
     },
     "domains": {

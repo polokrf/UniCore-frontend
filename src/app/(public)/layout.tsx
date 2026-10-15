@@ -7,7 +7,7 @@ export default function PublicLayout({ children }: LayoutProps<'/'>) {
       <header className=" sticky top-0  z-100 ">
         <Header />
       </header>
-      <main className=" flex-1  lg:px-5 px-2 lg:py-6 py-4">{children}</main>
+      <main className=" flex-1  lg:px-5 px-2 ">{children}</main>
       <Footer />
     </div>
   );
