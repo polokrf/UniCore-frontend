@@ -18,7 +18,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t bg-accent">
+    <footer className="border-t bg-accent ">
       <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 lg:py-16">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-16">
           {/* Brand Information */}
