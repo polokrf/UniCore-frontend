@@ -1,86 +1,112 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, BookOpenCheck, Target, Users } from 'lucide-react';
+import {
+ArrowRight,
+BookOpenCheck,
+Target,
+Users,
+} from 'lucide-react';
 
 const features = [
-  {
-    icon: BookOpenCheck,
-    title: 'Quality Education',
-    description: 'Build strong academic foundations for your future.',
-  },
-  {
-    icon: Target,
-    title: 'Career Focused',
-    description: 'Develop practical skills for real-world challenges.',
-  },
-  {
-    icon: Users,
-    title: 'Expert Faculty',
-    description: 'Learn with guidance from experienced educators.',
-  },
+{
+icon: BookOpenCheck,
+title: 'Quality Education',
+description:
+'Build strong academic foundations for your future.',
+},
+{
+icon: Target,
+title: 'Career Focused',
+description:
+'Develop practical skills for real-world challenges.',
+},
+{
+icon: Users,
+title: 'Expert Faculty',
+description:
+'Learn with guidance from experienced educators.',
+},
 ];
 
 export default function AboutSection() {
-  return (
-    <section className="bg-white py-20 md:py-28">
-      <div className="mx-auto grid max-w-7xl items-center gap-14 px-5 lg:grid-cols-2">
-        <div className="relative">
-          <Image
-            src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=85"
-            alt="Students at a university campus"
-            width={1200}
-            height={900}
-            className="h-[350px] w-full rounded-3xl object-cover sm:h-[470px]"
-          />
+return ( <section className="overflow-hidden bg-white py-14 sm:py-20 lg:py-28"> <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:px-6 md:gap-14 lg:grid-cols-2 lg:px-8">
 
-          <div className="absolute -bottom-6 -right-3 rounded-2xl bg-blue-600 p-5 text-white shadow-xl sm:-right-6 sm:p-7">
-            <p className="text-3xl font-extrabold">Excellence</p>
-            <p className="mt-1 text-sm text-blue-100">
-              In every learning experience
-            </p>
-          </div>
-        </div>
 
-        <div className="pt-4">
-          <span className="text-sm font-bold uppercase tracking-[0.2em] text-blue-600">
-            About UniCore
-          </span>
-
-          <h2 className="mt-4 text-3xl font-extrabold leading-tight text-slate-900 sm:text-4xl">
-            Education That Builds a Better Tomorrow
-          </h2>
-
-          <p className="mt-5 leading-8 text-slate-600">
-            UniCore is designed to create an engaging academic environment where
-            students can explore new ideas, develop their skills, and prepare
-            for a successful future.
-          </p>
-
-          <div className="mt-8 space-y-6">
-            {features.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="flex gap-4">
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-                  <Icon size={24} />
-                </div>
-
-                <div>
-                  <h3 className="font-bold text-slate-900">{title}</h3>
-                  <p className="mt-1 text-sm leading-6 text-slate-600">
-                    {description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <Link
-            href="/about"
-            className="mt-9 inline-flex items-center gap-2 font-semibold text-blue-600 hover:text-blue-700"
-          >
-            Discover More <ArrowRight size={18} />
-          </Link>
-        </div>
+    {/* Image Section */}
+    <div className="relative mx-auto w-full max-w-xl lg:mx-0 lg:max-w-none">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl sm:rounded-3xl">
+        <Image
+          src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=1200&q=85"
+          alt="Students at a university campus"
+          fill
+          priority={false}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 50vw"
+          className="object-cover transition-transform duration-700 hover:scale-105"
+        />
       </div>
-    </section>
-  );
+
+      {/* Excellence Badge */}
+      <div className="absolute -bottom-3 right-3 max-w-[calc(100%-1.5rem)] rounded-xl bg-blue-600 px-4 py-3 text-white shadow-xl sm:-bottom-5 sm:right-5 sm:rounded-2xl sm:px-6 sm:py-5 lg:-right-4">
+        <p className="text-xl font-extrabold sm:text-3xl">
+          Excellence
+        </p>
+
+        <p className="mt-1 text-xs text-blue-100 sm:text-sm">
+          In every learning experience
+        </p>
+      </div>
+    </div>
+
+    {/* Content Section */}
+    <div className="pt-5 sm:pt-7 lg:pt-0">
+      <span className="inline-block text-xs font-bold uppercase tracking-[0.2em] text-blue-600 sm:text-sm">
+        About UniCore
+      </span>
+
+      <h2 className="mt-3 text-2xl font-extrabold leading-tight tracking-tight text-slate-900 sm:mt-4 sm:text-3xl md:text-4xl xl:text-5xl">
+        Education That Builds a Better Tomorrow
+      </h2>
+
+      <p className="mt-4 text-sm leading-7 text-slate-600 sm:mt-5 sm:text-base sm:leading-8">
+        UniCore is designed to create an engaging academic
+        environment where students can explore new ideas,
+        develop their skills, and prepare for a successful future.
+      </p>
+
+      {/* Features */}
+      <div className="mt-7 space-y-5 sm:mt-8 sm:space-y-6">
+        {features.map(({ icon: Icon, title, description }) => (
+          <div key={title} className="flex items-start gap-3 sm:gap-4">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 sm:h-12 sm:w-12">
+              <Icon size={22} className="sm:h-6 sm:w-6" />
+            </div>
+
+            <div className="min-w-0 flex-1">
+              <h3 className="text-base font-bold text-slate-900 sm:text-lg">
+                {title}
+              </h3>
+
+              <p className="mt-1 text-sm leading-6 text-slate-600 sm:text-base sm:leading-7">
+                {description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA Button */}
+      <Link
+        href="/about"
+        className="mt-7 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-blue-700 sm:mt-9 sm:px-6 sm:text-base"
+      >
+        Discover More
+        <ArrowRight size={18} />
+      </Link>
+    </div>
+
+  </div>
+</section>
+
+
+);
 }
