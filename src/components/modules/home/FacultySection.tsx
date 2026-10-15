@@ -1,6 +1,9 @@
+'use client'
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, GraduationCap } from 'lucide-react';
+import { useGetAllTeacher } from '@/hooks/teacher.hook';
+import { da } from 'zod/locales';
 
 const faculty = [
   {
@@ -27,9 +30,11 @@ const faculty = [
 ];
 
 export default function FacultySection() {
+
+  
   return (
     <section className="bg-white py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-5">
+      <div className="mx-auto max-w-7xl px-2 md:px-5">
         <div className="text-center">
           <span className="text-sm font-bold uppercase tracking-[0.2em] text-blue-600">
             Our Faculty
@@ -57,7 +62,7 @@ export default function FacultySection() {
                   alt={teacher.name}
                   width={500}
                   height={400}
-                  className="h-64 w-full object-cover"
+                  className="h-64 w-full object-cover "
                 />
 
                 <div className="absolute bottom-4 left-4 rounded-xl bg-white p-3 text-blue-600 shadow-lg">
@@ -76,12 +81,7 @@ export default function FacultySection() {
 
                 <p className="mt-1 text-sm text-slate-500">{teacher.role}</p>
 
-                <Link
-                  href="/faculty"
-                  className="mt-5 inline-flex items-center gap-2 font-semibold text-slate-800 hover:text-blue-600"
-                >
-                  View Profile <ArrowRight size={17} />
-                </Link>
+                
               </div>
             </article>
           ))}
