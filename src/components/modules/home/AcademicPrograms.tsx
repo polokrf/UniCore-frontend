@@ -44,7 +44,7 @@ const programs = [
 export default function AcademicPrograms() {
   return (
     <section className="bg-slate-50 py-20 md:py-28">
-      <div className="mx-auto max-w-7xl px-5">
+      <div className="mx-auto max-w-7xl p-2 md:px-5">
         <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
             <span className="text-sm font-bold uppercase tracking-[0.2em] text-blue-600">
@@ -62,7 +62,7 @@ export default function AcademicPrograms() {
           </div>
 
           <Link
-            href="/departments"
+            href="/chose-department"
             className="inline-flex items-center gap-2 font-semibold text-blue-600 hover:text-blue-700"
           >
             View All Programs <ArrowUpRight size={18} />
@@ -95,7 +95,7 @@ export default function AcademicPrograms() {
                 </p>
 
                 <Link
-                  href="/departments"
+                  href="/chose-department"
                   className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-800 transition group-hover:text-blue-600"
                 >
                   Learn More <ArrowUpRight size={16} />
@@ -108,3 +108,4 @@ export default function AcademicPrograms() {
     </section>
   );
 }
+

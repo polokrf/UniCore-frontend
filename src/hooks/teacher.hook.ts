@@ -9,8 +9,26 @@ import { useOfferings } from '@/hooks/catalog.hook';
 import { errorMessage } from '@/lib/format';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useMemo } from 'react';
+import { getAllTeacherProfile, getSingleTeacherProfile } from '@/api/teacher.public.api';
+import { getSingleTeacher } from '@/api/admin-api/approved.teacher.student.api';
 
 const PROFILES = ['teacher-profiles'];
+
+
+export const useGetAllTeacher=()=>{
+   return useQuery({
+     queryKey:['all-teacher'],
+     queryFn: getAllTeacherProfile,
+   });
+}
+
+export const useSingleTeacherPro =(id:string)=>{
+  return useQuery({
+    queryKey: ['single-teacher'],
+    queryFn: () => getSingleTeacherProfile(id),
+    enabled: !!id,
+  });
+}
 
 // The API has no "my teacher profile" endpoint, so find the row whose userId
 // matches the logged-in user in the (approved) teacher list.
