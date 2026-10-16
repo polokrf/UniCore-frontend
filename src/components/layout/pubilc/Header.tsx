@@ -19,11 +19,13 @@ import {
   LogOut,
   UserRound,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const Header = () => {
   const { data: me, isLoading } = useGetMe();
   const { mutate: logout } = useLogout();
   const queryClient = useQueryClient();
+  const router = useRouter()
 
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -63,6 +65,7 @@ const Header = () => {
         });
 
         queryClient.removeQueries({ queryKey: ['user'] });
+        router.refresh()
 
         setIsProfileOpen(false);
         setIsMobileMenuOpen(false);

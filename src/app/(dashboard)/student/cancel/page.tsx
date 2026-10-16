@@ -40,24 +40,16 @@ export default function PaymentCancel() {
           </div>
 
           {/* Action Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
-            <Button
-              nativeButton={false}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-sm flex items-center justify-center gap-2 h-11 font-medium transition-all"
-              render={<Link href="/student/payments" />}
-            >
-              <RefreshCw className="w-4 h-4" />
-              Try Payment Again
-            </Button>
-
+          <div className="mt-8 ">
+           
             <Button
               nativeButton={false}
               variant="outline"
               className="w-full border-slate-200 text-slate-700 hover:bg-slate-50 h-11 flex items-center justify-center gap-2 font-medium transition-colors"
-              render={<Link href="/student/my-course" />}
+              render={<Link href="/student" />}
             >
               <ArrowLeft className="w-4 h-4" />
-              Back to Courses
+              Back 
             </Button>
           </div>
         </div>

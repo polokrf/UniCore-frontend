@@ -1,109 +1,56 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
-import { CheckCircle2, Home, BookOpen, Download } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Check } from 'lucide-react';
 
 export default function PaymentSuccess() {
-  // You can pass real transaction data from search params or state
-  const paymentDetails = {
-    amount: '$150.00',
-    transactionId: 'TXN-984201358',
-    date: new Date().toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    }),
-    paymentMethod: 'Online Payment',
-  };
+return ( <div className="flex min-h-[80vh] items-center justify-center px-4"> <div className="flex w-full max-w-md flex-col items-center text-center">
 
-  return (
-    <div className="min-h-[80vh] flex items-center justify-center p-4">
-      <div className="w-full max-w-lg space-y-8">
-        {/* Main Card */}
-        <div className="relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white/80 p-8 shadow-sm backdrop-blur-md text-center transition-all">
-          {/* Top Decorative Circle & Success Icon */}
-          <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-emerald-50 ring-8 ring-emerald-50/50">
-            <CheckCircle2 className="h-10 w-10 text-emerald-600" />
-          </div>
 
-          {/* Title & Subtitle */}
-          <div className="space-y-2">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-              Payment Successful!
-            </h1>
-            <p className="text-sm text-slate-500">
-              Thank you for your payment. Your enrollment request has been
-              processed successfully.
-            </p>
-          </div>
+    {/* Custom Success Icon */}
+    <div className="relative mb-7 flex h-28 w-28 items-center justify-center">
 
-          {/* Payment Summary Box */}
-          <div className="mt-8 rounded-xl bg-slate-50/80 p-5 border border-slate-100 text-left space-y-3">
-            <div className="flex justify-between items-center text-sm border-b border-slate-200/60 pb-2.5">
-              <span className="text-slate-500 font-medium">Amount Paid</span>
-              <span className="text-base font-bold text-slate-900">
-                {paymentDetails.amount}
-              </span>
-            </div>
+      {/* Outer Glow */}
+      <div className="absolute inset-0 animate-pulse rounded-full bg-emerald-100/70" />
 
-            <div className="flex justify-between items-center text-sm border-b border-slate-200/60 pb-2.5">
-              <span className="text-slate-500 font-medium">Transaction ID</span>
-              <span className="font-mono text-xs font-semibold bg-slate-200/70 text-slate-800 px-2 py-0.5 rounded">
-                {paymentDetails.transactionId}
-              </span>
-            </div>
+      {/* Main Circle */}
+      <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-xl shadow-emerald-200/60">
 
-            <div className="flex justify-between items-center text-sm border-b border-slate-200/60 pb-2.5">
-              <span className="text-slate-500 font-medium">Date</span>
-              <span className="text-slate-700 font-medium">
-                {paymentDetails.date}
-              </span>
-            </div>
-
-            <div className="flex justify-between items-center text-sm pt-0.5">
-              <span className="text-slate-500 font-medium">Payment Method</span>
-              <span className="text-slate-700 font-medium">
-                {paymentDetails.paymentMethod}
-              </span>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
-            <Button
-              nativeButton={false}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white shadow-sm flex items-center justify-center gap-2 h-11 font-medium transition-all"
-              render={<Link href="/student/my-course" />}
-            >
-              <BookOpen className="w-4 h-4" />
-              My Courses
-            </Button>
-
-            <Button
-              nativeButton={false}
-              variant="outline"
-              className="w-full border-slate-200 text-slate-700 hover:bg-slate-50 h-11 flex items-center justify-center gap-2 font-medium transition-colors"
-              render={<Link href="/student" />}
-            >
-              <Home className="w-4 h-4" />
-              Dashboard
-            </Button>
-          </div>
+        {/* Inner Circle */}
+        <div className="flex h-[72px] w-[72px] items-center justify-center rounded-full border-2 border-white/30 bg-white/10">
+          <Check
+            className="h-12 w-12 text-white"
+            strokeWidth={3}
+          />
         </div>
-
-        {/* Footer Support Text */}
-        <p className="text-center text-xs text-slate-400">
-          Having trouble? Contact support at{' '}
-          <a
-            href="mailto:support@nexus.com"
-            className="text-blue-600 underline hover:text-blue-700"
-          >
-            support@nexus.com
-          </a>
-        </p>
       </div>
+
+      {/* Decorative Dots */}
+      <span className="absolute right-0 top-3 h-3 w-3 rounded-full bg-emerald-400" />
+      <span className="absolute bottom-2 left-1 h-2.5 w-2.5 rounded-full bg-emerald-300" />
     </div>
-  );
+
+    {/* Success Text */}
+    <div className="space-y-3">
+      <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+        Payment Successful!
+      </h1>
+
+      <p className="mx-auto max-w-sm text-sm leading-6 text-slate-500 sm:text-base">
+        Your payment has been completed successfully.
+        Thank you for choosing UniCore!
+      </p>
+    </div>
+
+    {/* Success Badge */}
+    <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-700">
+      <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
+      Payment Confirmed
+    </div>
+
+  </div>
+</div>
+
+
+);
 }

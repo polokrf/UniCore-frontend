@@ -5,7 +5,7 @@ export const metadata = { title: 'My application | UniCore' };
 
 export default function ApplicationPage() {
   return (
-    <div className="mx-auto w-full max-w-xl">
+    <div className="mx-auto w-full max-w-xl my-16">
       <PageHeader
         title="My application"
         description="Track your student or faculty application."

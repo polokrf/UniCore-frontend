@@ -16,7 +16,7 @@ export default function UrlPagination({
     <div className="flex items-center justify-end gap-2 pt-3">
       <Button
         variant="outline"
-        nativeButton={false}
+       
         size="sm"
         disabled={page <= 1}
         onClick={() => set({ page: page - 1 })}
@@ -28,7 +28,7 @@ export default function UrlPagination({
       </span>
       <Button
         variant="outline"
-        nativeButton={false}
+       
         size="sm"
         disabled={page >= totalPage}
         onClick={() => set({ page: page + 1 })}
