@@ -13,6 +13,7 @@ import { useUrlParams } from '@/hooks/use-url-params';
 import AvailableCourses from './AvailableCourses';
 import MyCourses from './student.course/MyCoursesTable';
 import ResultsTable from './student.result/ResultsTable';
+import { IClassRoutine } from '@/type/addminAccess/get.class.routine.type';
 
 const TABS = ['courses', 'available', 'schedule', 'results'] as const;
 
@@ -20,8 +21,10 @@ export default function StudentOverview() {
   const { data: me } = useGetMe();
   const { data: enrollments, isPending, isError } = useMyEnrollments();
   const { data: results } = useMyResults();
-  const { data: routines } = useClassRoutines();
+  const { data: routines=[] } = useClassRoutines();
   const { get, set } = useUrlParams();
+
+  // console.log(routines)
 
   const requested = get('tab', 'courses');
   const tab = (TABS as readonly string[]).includes(requested)
@@ -44,12 +47,14 @@ export default function StudentOverview() {
     (sum, e) => sum + e.courseOffering.course.credit,
     0,
   );
-  // my schedule = routines of the courses I am confirmed in (the API returns every routine)
-  const confirmedOfferingIds = new Set(confirmed.map(e => e.courseOfferingId));
-  const myRoutines = (routines ?? []).filter(r =>
-    confirmedOfferingIds.has(r.courseOfferingId),
-  );
-
+  // // my schedule = routines of the courses I am confirmed in (the API returns every routine)
+  // const confirmedOfferingIds = new Set(confirmed.map(e => e.courseOfferingId));
+  // const myRoutines = (routines ?? []).filter(r =>
+  //   confirmedOfferingIds.has(r.courseOfferingId),
+  // );
+  
+  // console.log(myRoutines,confirmedOfferingIds)
+  // console.log(confirmed)
   // credit-weighted GPA over published results
   const creditOf = new Map(
     enrollments.map(e => [e.id, e.courseOffering.course.credit]),
@@ -86,7 +91,7 @@ export default function StudentOverview() {
           value={gpa}
           hint={`${results?.length ?? 0} published results`}
         />
-        <StatCard label="Classes per week" value={myRoutines.length} />
+        <StatCard label="Classes per week" value={routines.length} />
       </div>
 
       <Tabs
@@ -106,7 +111,7 @@ export default function StudentOverview() {
           <AvailableCourses enrollments={enrollments} />
         </TabsContent>
         <TabsContent value="schedule" className="pt-3">
-          <WeeklySchedule routines={myRoutines} showTeacher />
+          <WeeklySchedule routines={routines as IClassRoutine[]}  />
         </TabsContent>
         <TabsContent value="results" className="pt-3">
           <ResultsTable results={results ?? []} enrollments={enrollments} />

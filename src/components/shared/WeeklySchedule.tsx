@@ -1,14 +1,12 @@
-import { DAYS, dayLabel, toMinutes } from '@/lib/format';
-import { TRoutine } from '@/type/domain.type';
+
+import { DAYS, dayLabel } from '@/lib/format';
+import { IClassRoutine } from '@/type/addminAccess/get.class.routine.type';
 import EmptyState from './EmptyState';
 
-// Groups class routines by day (Saturday-first week, like the backend enum).
 export default function WeeklySchedule({
   routines,
-  showTeacher = false,
 }: {
-  routines: TRoutine[];
-  showTeacher?: boolean;
+  routines: IClassRoutine[];
 }) {
   if (routines.length === 0) {
     return (
@@ -19,38 +17,51 @@ export default function WeeklySchedule({
     );
   }
 
-  const byDay = DAYS.map(day => ({
+  const groupedRoutines = DAYS.map(day => ({
     day,
-    items: routines
-      .filter(r => r.day === day)
-      .sort((a, b) => toMinutes(a.startTime) - toMinutes(b.startTime)),
-  })).filter(group => group.items.length > 0);
+    routines: routines.filter(routine => routine.day === day),
+  })).filter(group => group.routines.length > 0);
 
   return (
     <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-      {byDay.map(({ day, items }) => (
-        <div key={day} className="rounded-lg border p-3">
-          <p className="mb-2 text-sm font-semibold">{dayLabel(day)}</p>
-          <ul className="space-y-2">
-            {items.map(r => (
-              <li key={r.id} className="bg-muted/50 rounded-md p-2 text-xs">
-                <p className="font-medium">
-                  {r.courseOffering.course.code} · {r.courseOffering.course.title}
+      {groupedRoutines.map(({ day, routines: dayRoutines }) => (
+        <div
+          key={day}
+          className="rounded-xl border bg-card p-4 shadow-sm"
+        >
+          <h3 className="mb-4 border-b pb-3 text-lg font-semibold">
+            {dayLabel(day)}
+          </h3>
+
+          <div className="space-y-3">
+            {dayRoutines.map(routine => (
+              <div
+                key={routine.id}
+                className="rounded-lg border bg-muted/30 p-3"
+              >
+                <p className="text-sm font-medium text-muted-foreground">
+                  Time
                 </p>
-                <p className="text-muted-foreground">
-                  {r.startTime}–{r.endTime} · {r.room} · Sec{' '}
-                  {r.courseOffering.section}
+
+                <p className="mt-1 font-semibold">
+                  {routine.startTime} – {routine.endTime}
                 </p>
-                {showTeacher && r.courseOffering.teacher ? (
-                  <p className="text-muted-foreground">
-                    {r.courseOffering.teacher.user.firstName}
+
+                <div className="mt-3">
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Room
                   </p>
-                ) : null}
-              </li>
+
+                  <p className="mt-1 text-sm font-medium">
+                    {routine.room}
+                  </p>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       ))}
     </div>
   );
 }
+

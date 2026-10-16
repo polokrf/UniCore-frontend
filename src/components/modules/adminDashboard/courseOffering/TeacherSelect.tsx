@@ -48,6 +48,8 @@ export default function TeacherSelect({
       ? 'Loading teachers...'
       : 'Select a teacher';
 
+      // console.log(items)
+
   return (
     <div className="grid gap-1">
       <Select

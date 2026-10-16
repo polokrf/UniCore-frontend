@@ -37,6 +37,8 @@ export default function AssignTeacherSheet({
   const [error, setError] = useState('');
   const changing = !!offering?.teacherId;
 
+  // console.log(teacherName,'teacher name')
+
   const submit = () => {
     if (!offering || !teacherId) return;
     setError('');
