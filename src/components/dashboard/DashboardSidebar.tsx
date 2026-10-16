@@ -67,6 +67,7 @@ try {
   await logout()
   toast.success('Logged out successfully');
   queryClient.removeQueries({ queryKey: ['user'] });
+ window.location.reload();
 
   router.replace('/');
   router.refresh();

@@ -22,7 +22,7 @@ import {
 import { useRouter } from 'next/navigation';
 
 const Header = () => {
-  const { data: me, isLoading } = useGetMe();
+  const { data: me } = useGetMe();
   const { mutate: logout } = useLogout();
   const queryClient = useQueryClient();
   const router = useRouter()
@@ -30,13 +30,13 @@ const Header = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  if (isLoading) {
-    return (
-      <header className="px-4 py-5">
-        <p>Loading...</p>
-      </header>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <header className="px-4 py-5">
+  //       <p>Loading...</p>
+  //     </header>
+  //   );
+  // }
 
   const user = me?.data;
   const role: IUserRole | undefined = user?.role;
