@@ -1,5 +1,5 @@
-import { IUserRole } from "../user.type";
-import { IMeta } from "./admin.access.type";
+import { IUserRole } from '../user.type';
+import { IMeta } from './admin.access.type';
 
 export interface IResultUser {
   id: string;
@@ -67,7 +67,7 @@ export interface IResult {
   enrollmentId: string;
 
   marks: number;
-  grade: string;
+  grade: TGrade;
   gradePoint: number;
 
   published: boolean;
@@ -83,7 +83,26 @@ export type TResultResponse = {
   success: boolean;
   message: string;
   data: {
-    data:IResult[];
+    data: IResult[];
     meta: IMeta;
   };
 };
+
+export  type TGrade =
+  | 'A_PLUS'
+  | 'A'
+  | 'A_MINUS'
+  | 'B_PLUS'
+  | 'B'
+  | 'B_MINUS'
+  | 'C_PLUS'
+  | 'C'
+  | 'D'
+  | 'F';
+
+export interface IResult {
+  enrollmentId: string;
+  marks: number;
+  grade:TGrade;
+  gradePoint: number;
+}

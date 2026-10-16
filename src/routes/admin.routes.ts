@@ -39,13 +39,18 @@ export const adminRoutes: IRoutes = {
           title: 'All-Semester',
           url: `${adminPath}/all-semester`,
         },
+
+        {
+          title: 'All-Enrollments',
+          url: `${adminPath}/enrollments`,
+        },
         {
           title: 'All-Class-Routine',
           url: `${adminPath}/all-class-routine`,
         },
         {
-          title: 'All-Enrollments',
-          url: `${adminPath}/enrollments`,
+          title: 'All-Results',
+          url: `${adminPath}/results`,
         },
 
         {
@@ -66,13 +71,12 @@ export const adminRoutes: IRoutes = {
         },
 
         {
-          title: 'Class-Routine',
+          title: 'Create-Class-Routine',
           url: `${adminPath}/create-class-routine`,
         },
-
         {
-          title: 'All-Results',
-          url: `${adminPath}/results`,
+          title: 'Create-Result',
+          url: `${adminPath}/create-result`,
         },
       ],
     },
