@@ -375,7 +375,7 @@ Make sure you have installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/polokrf/UniCore-Frontend.git
+git clone https://github.com/polokrf/UniCore-frontend.git
 ```
 
 ```bash
