@@ -2,7 +2,7 @@
 'use client';
 
 import { useForm } from '@tanstack/react-form';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Field,
   FieldError,
@@ -19,7 +19,7 @@ import {
   LockKeyhole,
 } from 'lucide-react';
 import { registerPayload } from '@/validation/auth.validation';
-import { useRegister } from '@/hooks/auth.hook';
+import { useGetMe, useRegister } from '@/hooks/auth.hook';
 import { useRouter } from 'next/navigation';
 import { toast } from '../ui/toast';
 import { Spinner } from '../ui/spinner';
@@ -37,6 +37,8 @@ const RegisterForm = () => {
 
   const queryClient = useQueryClient();
   const route = useRouter();
+
+  
 
   const form = useForm({
     defaultValues: {
